@@ -63,14 +63,14 @@ manext = 1
 #### End of system configuration section. ####
 
 DISTFILES = COPYING ChangeLog Makefile.in configure configure.in \
-    REFERENCES bison.1 bison.rnh configure.bat \
+    REFERENCES bison++.1 bison.rnh configure.bat \
     bison.simple bison.hairy \
     LR0.c allocate.c closure.c conflicts.c derives.c \
     files.c getargs.c gram.c lalr.c lex.c main.c nullable.c \
     output.c print.c reader.c reduce.c symtab.c version.c \
     warshall.c files.h gram.h lex.h machine.h new.h state.h \
     symtab.h system.h types.h bison.cld build.com vmsgetargs.c \
-    vmshlp.mar README INSTALL bison.texinfo bison.info* texinfo.tex \
+    vmshlp.mar README INSTALL \
     getopt.c getopt.h getopt1.c alloca.c mkinstalldirs
 
 
@@ -94,7 +94,7 @@ OBJECTS = LR0.o allocate.o closure.o conflicts.o derives.o files.o	\
 	  warshall.o version.o						\
 	  getopt.o getopt1.o $(ALLOCA)
 
-all: bison bison.info bison.s1
+all: bison bison.s1
 
 Makefile: Makefile.in config.status
 	./config.status
@@ -119,33 +119,31 @@ distclean: clean
 	rm -f Makefile config.status
 
 realclean: distclean
-	rm -f TAGS *.info*
+	rm -f TAGS
 
 # Most of these deps are in case using RCS.
-install: all bison.1 $(srcdir)/$(PFILE) $(srcdir)/$(PFILE1) installdirs uninstall
+install: all bison++.1 $(srcdir)/$(PFILE) $(srcdir)/$(PFILE1) installdirs uninstall
 	$(INSTALL_PROGRAM) bison $(bindir)/bison
 	$(INSTALL_DATA) ./bison.s1 $(datadir)/$(PFILE)
 	$(INSTALL_DATA) $(srcdir)/$(PFILE1) $(datadir)/$(PFILE1)
 	-chmod a+r $(datadir)/$(PFILE) $(datadir)/$(PFILE1) 
-	-$(INSTALL_DATA) $(srcdir)/bison.1 $(mandir)/bison.$(manext)
-	-chmod a+r $(mandir)/bison.$(manext)
-	cd $(srcdir); for f in bison.info*; \
-	do $(INSTALL_DATA) $$f $(infodir)/$$f; done
+	-$(INSTALL_DATA) $(srcdir)/bison++.1 $(mandir)/bison++.$(manext)
+	-chmod a+r $(mandir)/bison++.$(manext)
 
 # Make sure all installation directories, e.g. $(bindir) actually exist by
 # making them if necessary.
 installdirs:
-	-sh $(srcdir)/mkinstalldirs $(bindir) $(datadir) $(libdir) $(infodir) $(mandir)
+	-sh $(srcdir)/mkinstalldirs $(bindir) $(datadir) $(libdir) $(mandir)
 
 uninstall:
 	rm -f $(bindir)/bison
 	-cd $(datadir); rm -f $(PFILE) $(PFILE1)
-	rm -f $(mandir)/bison.$(manext) $(infodir)/bison.info*
+	rm -f $(mandir)/bison.$(manext)
 
 bison: $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBS)
 
-dist: bison.info
+dist:
 	echo bison-`sed -e '/version_string/!d' -e 's/[^0-9.]*\([0-9.]*\).*/\1/' -e q version.c` > .fname
 	-rm -rf `cat .fname`
 	mkdir `cat .fname`
@@ -154,9 +152,6 @@ dist: bison.info
 	done
 	tar --gzip -chf `cat .fname`.tar.gz `cat .fname`
 	-rm -rf `cat .fname` .fname
-
-bison.info: bison.texinfo
-	$(MAKEINFO) $(srcdir)/bison.texinfo
 
 TAGS: *.c *.h
 	etags *.c *.h
