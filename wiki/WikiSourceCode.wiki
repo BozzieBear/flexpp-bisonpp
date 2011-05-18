@@ -29,9 +29,9 @@ Each tool has its own _tags_ subdirectory, allowing any Downloads tar set to be 
     * Compiles without warnings under gcc 4.5, generated scanners compile without warnings under g++ 4.5. (r14)
     * Remove derived and unused files. (r15)
     * Attempt to add a _configure_ file using _autoconf_ - resources and notes:
+      * [http://www.gnu.org/software/autoconf/manual/html_node/ GNU autoconf Manual] online. Chapter 3, _Making configure Scripts_, presents a diagram relating most of the tools.
+      * [http://www.gnu.org/software/automake/manual/html_node/ GNU automake Manual] online.
       * [http://sources.redhat.com/autobook/autobook/autobook_toc.html "Goat Book"] online.
-      * [http://www.gnu.org/software/autoconf/manual/html_node/ GNU Manual] online. Same as the _info_ pages but better formatting.  Chapter 3, _Making configure Scripts_, presents a diagram relating most of the tools.
-      * [http://www.gnu.org/software/automake/manual/html_node/ GNU automake] online.
       * Using _autoscan, aclocal, autoconf, automake_ produced a 700+ line, unintelligible Makefile.
       * The "++" in _flex++_ causes problems (e.g. in `Makefile.am`).
     * _configure_ and _Makefile.in_ adapted from _flex-2.4.6_. (r16)
