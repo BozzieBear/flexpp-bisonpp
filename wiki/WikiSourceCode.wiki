@@ -1,20 +1,22 @@
 #summary Source code organization and progress.
-
 = flex++/bison++ Source Code =
 
-== Subversion Layout ==
 This project's repository organization differs from the standard "trunk/branches/tags".
-Each tool has its own directory tree (flex++ and bison++).  Within each tool, the naming scheme provides for multiple trunks, each tracing back to a different release from circa 1993. The trunks are further described below.
+Each tool has its own directory tree (flex++ and bison++).
+Each tool also has its own _tags_ subdirectory, allowing any tar set in Downloads to be traced back to its corresponding trunk.
+Within each tool, the naming scheme provides for multiple trunks, each tracing back to a different release from circa 1993.
 
-Each tool has its own _tags_ subdirectory, allowing any Downloads tar set to be traced back to its corresponding trunk.
+The origins of the source code in each trunk are described below.
+Releases from a trunk are highlighted. 
 
-=== Bison++ Trunks: ===
- # *trunk-bison++-1.21-8* - all revisions traceable back to Alain Coetmeur's last release. Milestones:
+== Bison++ Trunks: ==
+ # *trunk-bison++-1.21-8* - Alain Coetmeur's last release. Revision notes:
   * Final release from AC. (tag r2)
   * _Harmonize to 1.22_ - study bison v1.22 and take any obvious steps to close the "diff gap", such as file renaming and code reordering. (r6)
   * Remove derived files (e.g. Makefile, config.status) and unused files (e.g. bison.info).  This eases comparisons to GNU Project bison releases. (r9)
   * *Release:* _bison++-1.21-45_ - compiles without warnings under _gcc_ 4.5 (except for issue 1 _mktemp_ complaint). Generated parsers compile and link without warnings under _g++_ 4.5. (tag r12)
- # *trunk-bison-1.22* - this GNU Project release most closely matches the _bison++_ branch point. Since _bison++_ was forked from an interim patch release, there is no way to determine exactly what AC's modifications were. The [http://code.google.com/p/oldbison/ oldbison] project has Bison versions 1.21 and 1.22, between which AC forked _bison++_ (1.21, patch level 8). Reviewing _diff -rw_ for both shows that 1.22 is the closer match. Deriving a _bison++_ from this trunk would tie it to an "official" release. Milestones:
+  * _(tbd) issue 1 mkstemp_ - replace calls to _mktemp_ which gcc complains about.
+ # *trunk-bison-1.22* - GNU Project release most closely matching the _bison++_ branch point. Since _bison++_ was forked from an interim patch release, there is no way to determine exactly what AC's modifications were. The [http://code.google.com/p/oldbison/ oldbison] project has Bison versions 1.21 and 1.22, between which AC forked _bison++_ (1.21, patch level 8). Reviewing _diff -rw_ for both shows that 1.22 is the closer match. Deriving a _bison++_ from this trunk would tie it to an "official" release. Revision notes:
   * GNU Project release, Sep 6 1993, Noah Friedman. (tag r4)
   * Remove files unused by _bison++_. (r13)
   * (tbd) Release _bison++-1.22_ - identical functionality as 1.21-8. Compatible with gcc 4.5.
@@ -23,20 +25,23 @@ Each tool has its own _tags_ subdirectory, allowing any Downloads tar set to be 
   * A _bison++-1.24'_ release would put _bison++_ on an equal license footing as present-day bison.
   * _bison.simple_ is not much different from 1.22, increasing the chances of success.
 
-=== Flex++ Trunks: ===
-  # *trunk-flex++-2.3.8-7* - traceable to AC's last release. Milestones:
+== Flex++ Trunks: ==
+  # *trunk-flex++-2.3.8-7* - Alain Coetmeur's last release. Revision notes:
     * Final release from AC. (tag r3)
-    * Compiles without warnings under gcc 4.5, generated scanners compile without warnings under g++ 4.5. (r14)
+    * Compiles without warnings under gcc 4.5 (except for issue 1 _mktemp_ complaint). Generated scanners compile without warnings under g++ 4.5. (r14)
     * Remove derived and unused files. (r15)
-    * Attempt to add a _configure_ file using _autoconf_ - resources and notes:
-      * [http://www.gnu.org/software/autoconf/manual/html_node/ GNU autoconf Manual] online. Chapter 3, _Making configure Scripts_, presents a diagram relating most of the tools.
-      * [http://www.gnu.org/software/automake/manual/html_node/ GNU automake Manual] online.
-      * [http://sources.redhat.com/autobook/autobook/autobook_toc.html "Goat Book"] online.
-      * Using _autoscan, aclocal, autoconf, automake_ produced a 700+ line, unintelligible Makefile.
-      * The "++" in _flex++_ causes problems (e.g. in `Makefile.am`).
-    * _configure_ and _Makefile.in_ adapted from _flex-2.4.6_. (r16)
+    * Configuration script added by adapting _configure_ and _Makefile.in_ files from _flex-2.4.6_. (r16)
     * *Release:* _flex++-2.3.8-45_. (tag r20)
     * _(tbd) issue 1 mkstemp_ - replace calls to _mktemp_ which gcc complains about.
   # *(tba) trunk-flex++-2.4.6* - earliest tar set I could find.
     * Includes ''autoconf'' configure file.
     * Flex 2.3.8 was followed by major release 2.4. Major changes between 2.3.8 and 2.4.0 suggest that creating ''flex++-2.4.6'' will be a difficult undertaking.
+
+==== Autoconf: ====
+I attempted to add a _configure_ file to flex++ using _autoconf_, but soon decided that adapting files from _flex-2.4.6_ was more expedient.
+Notes from the attempt:
+      * [http://www.gnu.org/software/autoconf/manual/html_node/ GNU autoconf Manual] online. Chapter 3, _Making configure Scripts_, presents a diagram relating most of the tools.
+      * [http://www.gnu.org/software/automake/manual/html_node/ GNU automake Manual] online.
+      * [http://sources.redhat.com/autobook/autobook/autobook_toc.html "Goat Book"] online.
+      * Using _autoscan, aclocal, autoconf, automake_ produced a 700+ line, unintelligible Makefile.
+      * The "++" in _flex++_ causes problems (e.g. in `Makefile.am`).
